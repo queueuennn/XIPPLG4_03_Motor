@@ -4,6 +4,7 @@ body {
 }
 
 #board {
-    background-color: lightgray;
+    background: url("./img/background.png") no-repeat center center;
+    background-size: cover;   /* stretch to fit */
     border-bottom: 1px solid black;
 }

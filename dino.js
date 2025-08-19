@@ -23,7 +23,7 @@ let dino = {
 //cactus
 let cactusArray = [];
 
-let cactus1Width = 34;
+let cactus1Width = 50;
 let cactus2Width = 69;
 let cactus3Width = 102;
 
@@ -36,7 +36,7 @@ let cactus2Img;
 let cactus3Img;
 
 //physics
-let velocityX = -3; //cactus moving left speed
+let velocityX = -5; //cactus moving left speed
 let velocityY = 0;
 let gravity = .4;
 
@@ -55,13 +55,13 @@ window.onload = function() {
     // context.fillRect(dino.x, dino.y, dino.width, dino.height);
 
     dinoImg = new Image();
-    dinoImg.src = "./img/dino.png";
+    dinoImg.src = "./img/kangaroo.png";
     dinoImg.onload = function() {
         context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
     }
 
     cactus1Img = new Image();
-    cactus1Img.src = "./img/cactus1.png";
+    cactus1Img.src = "./img/batu1.png";
 
     cactus2Img = new Image();
     cactus2Img.src = "./img/cactus2.png";
@@ -94,7 +94,7 @@ function update() {
 
         if (detectCollision(dino, cactus)) {
             gameOver = true;
-            dinoImg.src = "./img/dino-dead.png";
+            dinoImg.src = "./img/dead-kangaroo.png";
             dinoImg.onload = function() {
                 context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
             }
@@ -115,7 +115,7 @@ function moveDino(e) {
 
     if ((e.code == "Space" || e.code == "ArrowUp") && dino.y == dinoY) {
         //jump
-        velocityY = -10;
+        velocityY = -13;
     }
     else if (e.code == "ArrowDown" && dino.y == dinoY) {
         //duck
