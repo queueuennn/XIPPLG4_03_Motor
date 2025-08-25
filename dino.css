@@ -1,10 +1,183 @@
 body {
     font-family:'Courier New', Courier, monospace;
     text-align: center;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
 }
 
 #board {
-    background: url("./img/background.png") no-repeat center center;
-    background-size: cover;   /* stretch to fit */
-    border-bottom: 1px solid black;
+    background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+    border: 2px solid #333;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Menu Styles */
+.menu {
+    margin-bottom: 20px;
+}
+
+.menu button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.menu button:hover {
+    background: #45a049;
+}
+
+.settings-panel {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.settings-panel h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.setting-item {
+    margin: 10px 0;
+}
+
+.setting-item label {
+    margin-right: 10px;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+}
+
+body.dark-mode .container {
+    background: #2c3e50;
+}
+
+body.dark-mode h1 {
+    color: #ecf0f1;
+}
+
+body.dark-mode #board {
+    background: linear-gradient(to bottom, #2c3e50, #34495e);
+    border-color: #ecf0f1;
+}
+
+body.dark-mode .settings-panel {
+    background: #34495e;
+    border-color: #7f8c8d;
+    color: #ecf0f1;
+}
+
+/* Game Info */
+.game-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e8f5e8;
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    margin-bottom: 20px;
+}
+
+#toggle-theme {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#toggle-theme:hover {
+    background: #45a049;
+}
+
+/* Restart Button */
+.restart-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.restart-btn:hover {
+    background: #45a049;
+}
+
+body.dark-mode .restart-btn {
+    background: #34495e;
+    border: 1px solid #7f8c8d;
+}
+
+body.dark-mode .restart-btn:hover {
+    background: #2c3e50;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+}
+
+body.dark-mode .container {
+    background: #2c3e50;
+    color: #ecf0f1;
+}
+
+body.dark-mode h1 {
+    color: #ecf0f1;
+}
+
+body.dark-mode #board {
+    background: linear-gradient(to bottom, #2c3e50, #34495e);
+    border-color: #ecf0f1;
+}
+
+body.dark-mode .final-score {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #7f8c8d;
+}
+
+body.dark-mode .game-info {
+    background: #2d4d2d;
+    border-color: #4CAF50;
+    color: #ecf0f1;
 }

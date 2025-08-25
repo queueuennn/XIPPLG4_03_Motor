@@ -1,4 +1,6 @@
-
+// Game Configuration
+let soundEnabled = true;
+let darkMode = false;
 
 //board
 let board;
@@ -47,21 +49,17 @@ window.onload = function() {
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
+    context = board.getContext("2d");
 
-    context = board.getContext("2d"); //used for drawing on the board
-
-    //draw initial dinosaur
-    // context.fillStyle="green";
-    // context.fillRect(dino.x, dino.y, dino.width, dino.height);
-
+    //load images
     dinoImg = new Image();
-    dinoImg.src = "./img/kangaroo.png";
+    dinoImg.src = "./img/dino-run1.png";
     dinoImg.onload = function() {
         context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
     }
 
     cactus1Img = new Image();
-    cactus1Img.src = "./img/batu1.png";
+    cactus1Img.src = "./img/cactus1.png";
 
     cactus2Img = new Image();
     cactus2Img.src = "./img/cactus2.png";
@@ -69,8 +67,14 @@ window.onload = function() {
     cactus3Img = new Image();
     cactus3Img.src = "./img/cactus3.png";
 
+    // Setup theme toggle button
+    document.getElementById("toggle-theme").addEventListener("click", toggleTheme);
+    
+    // Setup restart button
+    document.getElementById("restart-button").addEventListener("click", restartGame);
+    
     requestAnimationFrame(update);
-    setInterval(placeCactus, 1000); //1000 milliseconds = 1 second
+    setInterval(placeCactus, 1000); //every 1 second
     document.addEventListener("keydown", moveDino);
 }
 
@@ -94,10 +98,10 @@ function update() {
 
         if (detectCollision(dino, cactus)) {
             gameOver = true;
-            dinoImg.src = "./img/dead-kangaroo.png";
-            dinoImg.onload = function() {
-                context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
-            }
+            document.getElementById("final-score-value").textContent = score; // Display final score
+            document.getElementById("final-score").style.display = "block"; // Show final score section
+            dinoImg.src = "./img/dead-kangaroo.png"; 
+            context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height); // Keep the dinosaur visible
         }
     }
 
@@ -165,4 +169,29 @@ function detectCollision(a, b) {
            a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
            a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+}
+
+function restartGame() {
+    // Reset game state
+    gameOver = false;
+    score = 0;
+    cactusArray = [];
+    dino.y = dinoY; // Reset dino position
+    velocityY = 0; // Reset velocity
+    dinoImg.src = "./img/dino-run1.png"; // Reset dino image
+    document.getElementById("final-score").style.display = "none"; // Hide final score
+    requestAnimationFrame(update); // Restart the game loop
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const themeButton = document.getElementById("toggle-theme");
+    
+    if (body.classList.contains("dark-mode")) {
+        body.classList.remove("dark-mode");
+        themeButton.textContent = "🌙 Dark Mode";
+    } else {
+        body.classList.add("dark-mode");
+        themeButton.textContent = "☀️ Light Mode";
+    }
 }

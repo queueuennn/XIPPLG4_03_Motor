@@ -2,13 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport", content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Chrome Dinosaur Game</title>
         <link rel="stylesheet" href="dino.css">
-        <script src="dino.js"></script>
+        <script src="dino.js" defer></script>
     </head>
     <body>
-        <h1>Chrome Dinosaur Game</h1>
-        <canvas id="board"></canvas>
+        <div class="container">
+            <h1>Chrome Dinosaur Game</h1>
+            <div class="theme-toggle">
+                <button id="toggle-theme">🌙 Dark Mode</button>
+            </div>
+            <canvas id="board"></canvas>
+            <div id="final-score" class="final-score" style="display: none;">
+                <h2>Game Over!</h2>
+                <p>Final Score: <span id="final-score-value">0</span></p>
+                <button id="restart-button" class="restart-btn">🔄 Main Lagi</button>
+            </div>
+        </div>
     </body>
 </html>
