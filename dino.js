@@ -13,14 +13,25 @@ let dinoWidth = 88;
 let dinoHeight = 94;
 let dinoX = 50;
 let dinoY = boardHeight - dinoHeight;
-let dinoImg;
+
+let dinoRun1 = new Image();
+let dinoRun2 = new Image();
+let dinoDead = new Image();
+
+dinoRun1.src = "./img/frog_running_1.png";
+dinoRun2.src = "./img/frog_running_2.png";
+dinoDead.src = "./img/frog_dead.png"; // <- make sure this file exists
+
+let dinoImg = dinoRun1; // start with first frame
 
 let dino = {
     x : dinoX,
     y : dinoY,
     width : dinoWidth,
     height : dinoHeight
-}
+};
+
+let frameCount = 0; // animation counter
 
 //cactus
 let cactusArray = [];
@@ -53,7 +64,7 @@ window.onload = function() {
 
     //load images
     dinoImg = new Image();
-    dinoImg.src = "./img/dino-run1.png";
+    dinoImg.src = "./img/frog_running_1.png";
     dinoImg.onload = function() {
         context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
     }
@@ -88,7 +99,16 @@ function update() {
     //dino
     velocityY += gravity;
     dino.y = Math.min(dino.y + velocityY, dinoY); //apply gravity to current dino.y, making sure it doesn't exceed the ground
-    context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+    frameCount++;
+if (!gameOver) {
+    if (frameCount % 20 < 10) {
+        dinoImg = dinoRun1;
+    } else {
+        dinoImg = dinoRun2;
+    }
+}
+context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+
 
     //cactus
     for (let i = 0; i < cactusArray.length; i++) {
