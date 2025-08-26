@@ -72,10 +72,11 @@ document.getElementById("btn-restart2").addEventListener("click", restartGame);
 document.getElementById("btn-home").addEventListener("click", backToHome);
 document.getElementById("btn-home2").addEventListener("click", backToHome);
 
-// Exit
 document.getElementById("btn-exit").addEventListener("click", () => {
-    window.close();
+    window.location.href = "about:blank"; 
+    alert("Game closed! Terima kasih sudah main 😊");
 });
+
 
 // ------------------ GAME LOOP ------------------ //
 
