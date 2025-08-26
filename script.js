@@ -19,19 +19,17 @@ const gameOverMenu = document.getElementById("game-over");
 const scoreboard = document.getElementById("scoreboard");
 const finalScore = document.getElementById("final-score");
 const finalHighScore = document.getElementById("final-high-score");
+const howto = document.getElementById("howto");
 
 let game_state = "Home";
 let bird_dy = 0;
 let animationId;
 
 // ------------------ INITIALIZE & BUTTON EVENTS ------------------ //
-
 window.addEventListener('load', () => {
-    // Muat high score dari localStorage saat halaman dimuat
     if (localStorage.getItem("flappyHighScore")) {
         highScore = parseInt(localStorage.getItem("flappyHighScore"));
     }
-    // Tampilkan high score di awal
     score_title.innerHTML = `High Score: ${highScore}`;
 });
 
@@ -40,8 +38,19 @@ document.getElementById("btn-start").addEventListener("click", () => {
     homeMenu.classList.add("hidden");
     scoreboard.classList.remove("hidden");
     resetGame();
+
+    // tampilkan burung dengan animasi
+    bird.classList.remove("hidden");
+    bird.classList.add("fly-in");
+    setTimeout(() => bird.classList.remove("fly-in"), 1000);
+
     game_state = "Play";
     play();
+});
+
+// Toggle How to Play
+document.getElementById("btn-howto").addEventListener("click", () => {
+    howto.classList.toggle("hidden");
 });
 
 // Pause / Resume (Key: P)
@@ -72,14 +81,13 @@ document.getElementById("btn-restart2").addEventListener("click", restartGame);
 document.getElementById("btn-home").addEventListener("click", backToHome);
 document.getElementById("btn-home2").addEventListener("click", backToHome);
 
+// Exit button
 document.getElementById("btn-exit").addEventListener("click", () => {
     window.location.href = "about:blank"; 
     alert("Game closed! Terima kasih sudah main 😊");
 });
 
-
 // ------------------ GAME LOOP ------------------ //
-
 function resetGame() {
     document.querySelectorAll(".pipe_sprite").forEach((e) => e.remove());
     bird.style.top = "40vh";
@@ -94,16 +102,15 @@ function play() {
     function apply_gravity() {
         if (game_state !== "Play") return;
 
-        bird_dy = bird_dy + gravity;
+        bird_dy += gravity;
         document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowUp" || e.key === " ") {
+            if (e.key === " " || e.key === "ArrowUp") {
                 img.src = "images/Bird-2.png";
                 bird_dy = -6.5;
             }
         });
-
         document.addEventListener("keyup", (e) => {
-            if (e.key === "ArrowUp" || e.key === " ") {
+            if (e.key === " " || e.key === "ArrowUp") {
                 img.src = "images/Bird.png";
             }
         });
@@ -131,7 +138,6 @@ function play() {
 
         if (pipe_seperation > 115) {
             pipe_seperation = 0;
-
             let pipe_posi = Math.floor(Math.random() * 43) + 8;
 
             let pipe_sprite_inv = document.createElement("div");
@@ -165,7 +171,6 @@ function play() {
                 element.remove();
             } else {
                 // Collision
-                // Perkecil hitbox burung saat pengecekan tabrakan
                 let birdHitboxWidth = bird_props.width * 0.8; 
                 let birdHitboxHeight = bird_props.height * 0.8; 
 
@@ -198,20 +203,18 @@ function play() {
 }
 
 // ------------------ GAME STATES ------------------ //
-
 function endGame() {
     game_state = "End";
     img.style.display = "none";
     sound_die.play();
     finalScore.innerHTML = score_val.innerHTML;
+    updateLeaderboard(parseInt(score_val.innerHTML));
 
-    // Perbarui High Score jika skor saat ini lebih tinggi
     if (parseInt(score_val.innerHTML) > highScore) {
         highScore = parseInt(score_val.innerHTML);
         localStorage.setItem("flappyHighScore", highScore);
     }
     finalHighScore.innerHTML = `High Score: ${highScore}`;
-
     gameOverMenu.classList.remove("hidden");
 }
 
@@ -219,7 +222,11 @@ function restartGame() {
     gameOverMenu.classList.add("hidden");
     pauseMenu.classList.add("hidden");
     resetGame();
-    // Tampilkan high score di scoreboard saat restart
+
+    bird.classList.remove("hidden");
+    bird.classList.add("fly-in");
+    setTimeout(() => bird.classList.remove("fly-in"), 1000);
+
     score_title.innerHTML = `High Score: ${highScore}`;
     game_state = "Play";
     play();
@@ -230,7 +237,26 @@ function backToHome() {
     pauseMenu.classList.add("hidden");
     scoreboard.classList.add("hidden");
     resetGame();
-    img.style.display = "none";
+
+    bird.classList.add("hidden"); // sembunyikan burung saat balik home
+
     homeMenu.classList.remove("hidden");
     game_state = "Home";
+}
+
+// ------------------ LEADERBOARD ------------------ //
+function updateLeaderboard(newScore) {
+    let scores = JSON.parse(localStorage.getItem("flappyLeaderboard")) || [];
+    scores.push(newScore);
+    scores.sort((a, b) => b - a);
+    scores = scores.slice(0, 5);
+    localStorage.setItem("flappyLeaderboard", JSON.stringify(scores));
+
+    const leaderboardList = document.getElementById("leaderboard-list");
+    leaderboardList.innerHTML = "";
+    scores.forEach((s) => {
+        const li = document.createElement("li");
+        li.textContent = `${s}`;
+        leaderboardList.appendChild(li);
+    });
 }

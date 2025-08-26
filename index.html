@@ -12,30 +12,33 @@
 <body>
     <div class="background"></div>
 
-    <img src="images/Bird.png" alt="bird-img" class="bird" id="bird-1">
+    <img src="images/Bird.png" alt="bird-img" class="bird hidden" id="bird-1">
 
     <div class="home-menu" id="home-menu">
         <img src="images/judul.png" alt="Birdie Logo" class="title-logo">
         <button id="btn-start">Start Game</button>
         <button id="btn-howto">How to Play</button>
         <button id="btn-exit">Exit</button>
+
+        <!-- How to Play -->
         <div class="howto hidden" id="howto">
-            <p><span style="color: red;">↑</span> Arrow Up to Fly</p>
-            <p><b>Enter</b> to Start</p>
-            <p><b>P</b> to Pause</p>
+            <p><span class="keycap">Space</span> to Fly</p>
+            <p><span class="keycap">P</span> to Pause</p>
         </div>
     </div>
 
+    <!-- In-game message -->
     <div class="message hidden" id="game-message">
-        Press <b>Enter</b> to Start <br>
-        <span style="color: red;">↑</span> Arrow Up to Fly
+        <span class="keycap">Space</span> to Fly
     </div>
 
+    <!-- Scoreboard -->
     <div class="scoreboard hidden" id="scoreboard">
         <span class="score_title">High Score: 0</span>
         <span class="score_val">0</span>
     </div>
 
+    <!-- Pause Menu -->
     <div class="pause-menu hidden" id="pause-menu">
         <h2>Paused</h2>
         <button id="btn-resume">Resume</button>
@@ -43,12 +46,19 @@
         <button id="btn-home">Back to Home</button>
     </div>
 
+    <!-- Game Over -->
     <div class="game-over hidden" id="game-over">
         <h2>Game Over</h2>
         <p>Your Score: <span id="final-score">0</span></p>
         <p id="final-high-score">High Score: 0</p>
         <button id="btn-restart2">Restart</button>
         <button id="btn-home2">Back to Home</button>
+
+        <!-- Leaderboard -->
+        <div id="leaderboard">
+            <h3>Leaderboard</h3>
+            <ol id="leaderboard-list"></ol>
+        </div>
     </div>
 </body>
 </html>
