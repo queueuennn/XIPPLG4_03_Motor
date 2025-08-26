@@ -164,11 +164,15 @@ function play() {
                 element.remove();
             } else {
                 // Collision
+                // Perkecil hitbox burung saat pengecekan tabrakan
+                let birdHitboxWidth = bird_props.width * 0.8; 
+                let birdHitboxHeight = bird_props.height * 0.8; 
+
                 if (
                     bird_props.left < pipe_sprite_props.left + pipe_sprite_props.width &&
-                    bird_props.left + bird_props.width > pipe_sprite_props.left &&
+                    bird_props.left + birdHitboxWidth > pipe_sprite_props.left &&
                     bird_props.top < pipe_sprite_props.top + pipe_sprite_props.height &&
-                    bird_props.top + bird_props.height > pipe_sprite_props.top
+                    bird_props.top + birdHitboxHeight > pipe_sprite_props.top
                 ) {
                     endGame();
                     return;
