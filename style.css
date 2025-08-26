@@ -1,18 +1,24 @@
+/* Reset & Base */
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+body {
+	overflow: hidden;
+}
+
+/* Background */
 .background {
 	height: 100vh;
 	width: 100vw;
 	background: url('images/background-img.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	background-size: cover;
 }
+
+/* Bird */
 .bird {
 	height: 100px;
 	width: 130px;
@@ -21,63 +27,118 @@
 	left: 30vw;
 	z-index: 100;
 }
+
+/* Pipe */
 .pipe_sprite {
 	position: fixed;
 	top: 40vh;
 	left: 100vw;
 	height: 70vh;
 	width: 6vw;
-	background:radial-gradient(lightgreen 50%, green);
-	border: 5px solid black;
+	background: radial-gradient(lightgreen 50%, green);
+	border: 4px solid #222;
+	border-radius: 10px;
 }
+
+/* Message (in-game) */
 .message {
 	position: absolute;
 	z-index: 10;
-	color: black;
+	color: #111;
 	top: 30%;
 	left: 50%;
-	font-size: 4em;
+	font-size: 3em;
 	transform: translate(-50%, -50%);
 	text-align: center;
+	padding: 20px 30px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 15px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
-.messageStyle{
-	background: white;
-	padding: 30px;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	border-radius: 5%;
-}
-.score {
+
+/* Scoreboard */
+.scoreboard {
 	position: fixed;
-	z-index: 10;
-	height: 10vh;
-	font-size: 10vh;
-	font-weight: 100;
-	color: white;
-	-webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
-	top: 0;
-	left: 0;
-	margin: 10px;
-	font-family: Arial, Helvetica, sans-serif;
+	top: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 2rem;
+	color: #fff;
+	font-weight: bold;
+	text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+	background: rgba(0,0,0,0.3);
+	padding: 8px 20px;
+	border-radius: 20px;
 }
+
 .score_val {
 	color: gold;
 	font-weight: bold;
 }
+
+/* Home, Pause, Game Over Menu */
+.home-menu, .pause-menu, .game-over {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	background: rgba(255, 255, 255, 0.95);
+	padding: 40px 50px;
+	border-radius: 20px;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+	z-index: 999;
+}
+
+/* Title */
+.home-menu h1, .pause-menu h2, .game-over h2 {
+	margin-bottom: 20px;
+	font-size: 2.5rem;
+	color: #333;
+}
+
+/* Buttons */
+button {
+	display: block;
+	margin: 10px auto;
+	padding: 12px 25px;
+	font-size: 1.1rem;
+	font-weight: bold;
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: 0.3s ease;
+	background: linear-gradient(135deg, #4cafef, #1976d2);
+	color: white;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+	background: linear-gradient(135deg, #1976d2, #004ba0);
+	transform: translateY(-2px);
+}
+
+/* Hidden class */
+.hidden {
+	display: none !important;
+}
+
+/* Responsive */
 @media only screen and (max-width: 1080px) {
-    .message{
-		font-size: 50px;
+	.message {
+		font-size: 2rem;
 		top: 50%;
-		white-space: nowrap;
+		width: 90%;
 	}
-	.score{
-		font-size: 8vh;
+	.bird {
+		width: 100px;
+		height: 80px;
 	}
-	.bird{
-		width: 120px;
-		height: 90px;
-	}
-	.pipe_sprite{
+	.pipe_sprite {
 		width: 14vw;
+	}
+	.home-menu, .pause-menu, .game-over {
+		width: 90%;
+		padding: 30px 20px;
 	}
 }
