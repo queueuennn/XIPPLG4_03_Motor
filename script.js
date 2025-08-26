@@ -204,6 +204,7 @@ function endGame() {
     img.style.display = "none";
     sound_die.play();
     finalScore.innerHTML = score_val.innerHTML;
+    updateLeaderboard(parseInt(score_val.innerHTML));
 
     // Perbarui High Score jika skor saat ini lebih tinggi
     if (parseInt(score_val.innerHTML) > highScore) {
@@ -233,4 +234,28 @@ function backToHome() {
     img.style.display = "none";
     homeMenu.classList.remove("hidden");
     game_state = "Home";
+}
+
+// ------------------ LEADERBOARD ------------------ //
+function updateLeaderboard(newScore) {
+    let scores = JSON.parse(localStorage.getItem("flappyLeaderboard")) || [];
+
+    // Tambah skor baru
+    scores.push(newScore);
+
+    // Urutkan dari besar ke kecil, ambil 5 tertinggi
+    scores.sort((a, b) => b - a);
+    scores = scores.slice(0, 5);
+
+    // Simpan kembali ke localStorage
+    localStorage.setItem("flappyLeaderboard", JSON.stringify(scores));
+
+    // Render ke leaderboard
+    const leaderboardList = document.getElementById("leaderboard-list");
+    leaderboardList.innerHTML = "";
+    scores.forEach((s, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${s}`;
+        leaderboardList.appendChild(li);
+    });
 }
