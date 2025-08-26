@@ -1,3 +1,4 @@
+// Global Variables
 let move_speed = 3, gravity = 0.5;
 let bird = document.querySelector('.bird');
 let img = document.getElementById('bird-1');
@@ -9,6 +10,7 @@ let background = document.querySelector('.background').getBoundingClientRect();
 
 let score_val = document.querySelector('.score_val');
 let score_title = document.querySelector('.score_title');
+let highScore = 0;
 
 // Menu Elements
 const homeMenu = document.getElementById("home-menu");
@@ -16,12 +18,22 @@ const pauseMenu = document.getElementById("pause-menu");
 const gameOverMenu = document.getElementById("game-over");
 const scoreboard = document.getElementById("scoreboard");
 const finalScore = document.getElementById("final-score");
+const finalHighScore = document.getElementById("final-high-score");
 
-let game_state = "Home"; // Home | Play | Pause | End
+let game_state = "Home";
 let bird_dy = 0;
 let animationId;
 
-// ------------------ BUTTON EVENTS ------------------ //
+// ------------------ INITIALIZE & BUTTON EVENTS ------------------ //
+
+window.addEventListener('load', () => {
+    // Muat high score dari localStorage saat halaman dimuat
+    if (localStorage.getItem("flappyHighScore")) {
+        highScore = parseInt(localStorage.getItem("flappyHighScore"));
+    }
+    // Tampilkan high score di awal
+    score_title.innerHTML = `High Score: ${highScore}`;
+});
 
 // Start Game
 document.getElementById("btn-start").addEventListener("click", () => {
@@ -62,7 +74,7 @@ document.getElementById("btn-home2").addEventListener("click", backToHome);
 
 // Exit
 document.getElementById("btn-exit").addEventListener("click", () => {
-    window.close(); // (tidak selalu jalan di browser modern)
+    window.close();
 });
 
 // ------------------ GAME LOOP ------------------ //
@@ -187,6 +199,14 @@ function endGame() {
     img.style.display = "none";
     sound_die.play();
     finalScore.innerHTML = score_val.innerHTML;
+
+    // Perbarui High Score jika skor saat ini lebih tinggi
+    if (parseInt(score_val.innerHTML) > highScore) {
+        highScore = parseInt(score_val.innerHTML);
+        localStorage.setItem("flappyHighScore", highScore);
+    }
+    finalHighScore.innerHTML = `High Score: ${highScore}`;
+
     gameOverMenu.classList.remove("hidden");
 }
 
@@ -194,6 +214,8 @@ function restartGame() {
     gameOverMenu.classList.add("hidden");
     pauseMenu.classList.add("hidden");
     resetGame();
+    // Tampilkan high score di scoreboard saat restart
+    score_title.innerHTML = `High Score: ${highScore}`;
     game_state = "Play";
     play();
 }
