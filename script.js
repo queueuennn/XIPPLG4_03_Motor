@@ -243,3 +243,20 @@ function backToHome() {
     homeMenu.classList.remove("hidden");
     game_state = "Home";
 }
+
+// ------------------ LEADERBOARD ------------------ //
+function updateLeaderboard(newScore) {
+    let scores = JSON.parse(localStorage.getItem("flappyLeaderboard")) || [];
+    scores.push(newScore);
+    scores.sort((a, b) => b - a);
+    scores = scores.slice(0, 5);
+    localStorage.setItem("flappyLeaderboard", JSON.stringify(scores));
+
+    const leaderboardList = document.getElementById("leaderboard-list");
+    leaderboardList.innerHTML = "";
+    scores.forEach((s) => {
+        const li = document.createElement("li");
+        li.textContent = `${s}`;
+        leaderboardList.appendChild(li);
+    });
+}
