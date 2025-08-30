@@ -39,14 +39,45 @@ document.getElementById("btn-start").addEventListener("click", () => {
     scoreboard.classList.remove("hidden");
     resetGame();
 
-    // tampilkan burung dengan animasi
     bird.classList.remove("hidden");
     bird.classList.add("fly-in");
     setTimeout(() => bird.classList.remove("fly-in"), 1000);
 
-    game_state = "Play";
-    play();
+    startCountdown(() => {
+        game_state = "Play";
+        play();
+    });
 });
+
+function startCountdown(callback) {
+    const countdownEl = document.getElementById("countdown");
+    countdownEl.classList.remove("hidden");
+
+    let messages = ["Ready", "Set", "Go!"];
+    let i = 0;
+
+    function showMessage() {
+        countdownEl.textContent = messages[i];
+
+        // restart animasi
+        countdownEl.classList.remove("pop");
+        void countdownEl.offsetWidth; // trik reflow
+        countdownEl.classList.add("pop");
+
+        i++;
+        if (i < messages.length) {
+            setTimeout(showMessage, 1000); // tunggu 1 detik antar pesan
+        } else {
+            setTimeout(() => {
+                countdownEl.classList.add("hidden");
+                callback(); // mulai game
+            }, 1000);
+        }
+    }
+
+    showMessage();
+}
+
 
 // Toggle How to Play
 document.getElementById("btn-howto").addEventListener("click", () => {
@@ -94,7 +125,7 @@ function resetGame() {
     img.style.display = "block";
     img.src = "images/Bird.png";
     score_val.innerHTML = "0";
-    bird_dy = 0;
+    bird_dy = -6.5;
 }
 
 function play() {

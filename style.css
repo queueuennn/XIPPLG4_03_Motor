@@ -113,3 +113,25 @@ button:hover { background: linear-gradient(135deg, #1976d2, #004ba0); transform:
     .pipe_sprite { width: 14vw; }
     .home-menu, .pause-menu, .game-over { width: 90%; padding: 30px 20px; }
 }
+
+.countdown {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+    z-index: 2000;
+}
+
+
+@keyframes pop {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.pop {
+    animation: pop 0.8s ease-in-out;
+}
