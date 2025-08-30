@@ -135,3 +135,17 @@ button:hover { background: linear-gradient(135deg, #1976d2, #004ba0); transform:
 .pop {
     animation: pop 0.8s ease-in-out;
 }
+
+.volume-btn {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform 0.2s ease;
+}
+.volume-btn:hover {
+    transform: scale(1.2);
+}

@@ -222,7 +222,7 @@ function play() {
                     ) {
                         score_val.innerHTML = parseInt(score_val.innerHTML) + 1;
                         element.increase_score = "0";
-                        sound_point.play();
+                        if (!isMuted) sound_point.play();
                     }
                     element.style.left = pipe_sprite_props.left - move_speed + "px";
                 }
@@ -237,7 +237,8 @@ function play() {
 function endGame() {
     game_state = "End";
     img.style.display = "none";
-    sound_die.play();
+    if (!isMuted) sound_die.play();
+
     finalScore.innerHTML = score_val.innerHTML;
     updateLeaderboard(parseInt(score_val.innerHTML));
 
@@ -295,3 +296,16 @@ function updateLeaderboard(newScore) {
         leaderboardList.appendChild(li);
     });
 }
+
+let isMuted = false;
+const volumeBtn = document.getElementById("volume-btn");
+
+volumeBtn.addEventListener("click", () => {
+    isMuted = !isMuted;
+
+    if (isMuted) {
+        volumeBtn.innerHTML = "<i class='bx bx-volume-mute'></i>";
+    } else {
+        volumeBtn.innerHTML = "<i class='bx bx-volume-full'></i>";
+    }
+});
