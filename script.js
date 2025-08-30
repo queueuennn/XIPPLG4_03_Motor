@@ -259,9 +259,13 @@ function restartGame() {
     setTimeout(() => bird.classList.remove("fly-in"), 1000);
 
     score_title.innerHTML = `High Score: ${highScore}`;
-    game_state = "Play";
-    play();
+
+    startCountdown(() => {
+        game_state = "Play";
+        play();
+    });
 }
+
 
 function backToHome() {
     gameOverMenu.classList.add("hidden");
