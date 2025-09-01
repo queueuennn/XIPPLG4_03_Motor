@@ -309,3 +309,18 @@ volumeBtn.addEventListener("click", () => {
         volumeBtn.innerHTML = "<i class='bx bx-volume-full'></i>";
     }
 });
+
+const themeBtn = document.getElementById("theme-btn");
+const backgroundEl = document.querySelector(".background");
+let isDarkMode = false;
+
+themeBtn.addEventListener("click", () => {
+    isDarkMode = !isDarkMode;
+    if (isDarkMode) {
+        backgroundEl.style.backgroundImage = "url('images/background-dark.png')"; // ganti dengan file bg malam
+        themeBtn.innerHTML = "<i class='bx bx-sun'></i>";
+    } else {
+        backgroundEl.style.backgroundImage = "url('images/background-img.png')";
+        themeBtn.innerHTML = "<i class='bx bx-moon'></i>";
+    }
+});
