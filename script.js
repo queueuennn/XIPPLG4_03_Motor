@@ -114,8 +114,11 @@ document.getElementById("btn-home2").addEventListener("click", backToHome);
 
 // Exit button
 document.getElementById("btn-exit").addEventListener("click", () => {
-    window.location.href = "about:blank"; 
-    alert("Game closed! Terima kasih sudah main 😊");
+    const thankYou = document.getElementById("thank-you");
+    thankYou.classList.remove("hidden");
+    setTimeout(() => {
+        window.location.href = "about:blank";
+    }, 2000);
 });
 
 // ------------------ GAME LOOP ------------------ //

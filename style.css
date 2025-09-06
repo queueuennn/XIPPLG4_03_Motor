@@ -55,6 +55,15 @@ body { overflow: hidden; }
     box-shadow: 0 8px 25px rgba(0,0,0,0.3); z-index: 999;
 }
 
+/* Thank You Screen */
+.thank-you {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center; background: rgba(255,255,255,0.9);
+    padding: 40px 50px; border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3); z-index: 999;
+    color: #1976d2; font-weight: bold;
+}
+
 /* Title */
 .home-menu h1, .pause-menu h2, .game-over h2 {
     margin-bottom: 20px; font-size: 2.5rem; color: #fff;
