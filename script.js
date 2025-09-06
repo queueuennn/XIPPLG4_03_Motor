@@ -4,7 +4,10 @@ let bird = document.querySelector('.bird');
 let img = document.getElementById('bird-1');
 let sound_point = new Audio('sounds effect/point.mp3');
 let sound_die = new Audio('sounds effect/die.mp3');
-
+let sound_sound = new Audio('sounds effect/sound.mp3')
+sound_sound.loop = true;
+let sound_home = new Audio('sounds effect/newhome.mp3');
+sound_home.loop = true;
 let bird_props;
 let background = document.querySelector('.background').getBoundingClientRect();
 
@@ -31,6 +34,10 @@ window.addEventListener('load', () => {
         highScore = parseInt(localStorage.getItem("flappyHighScore"));
     }
     score_title.innerHTML = `High Score: ${highScore}`;
+    if (!isMuted) {
+        sound_home.currentTime = 0;
+        sound_home.play();
+    }
 });
 
 // Start Game
@@ -45,6 +52,11 @@ document.getElementById("btn-start").addEventListener("click", () => {
 
     startCountdown(() => {
         game_state = "Play";
+        sound_home.pause();
+        if (!isMuted) {
+            sound_sound.currentTime = 0;
+            sound_sound.play();
+        }
         play();
     });
 });
@@ -90,9 +102,11 @@ document.addEventListener("keydown", (e) => {
         game_state = "Pause";
         pauseMenu.classList.remove("hidden");
         cancelAnimationFrame(animationId);
+        sound_sound.pause();
     } else if (e.key.toLowerCase() === "p" && game_state === "Pause") {
         game_state = "Play";
         pauseMenu.classList.add("hidden");
+        sound_sound.play();
         play();
     }
 });
@@ -101,6 +115,7 @@ document.addEventListener("keydown", (e) => {
 document.getElementById("btn-resume").addEventListener("click", () => {
     pauseMenu.classList.add("hidden");
     game_state = "Play";
+    sound_sound.play();
     play();
 });
 
@@ -241,6 +256,11 @@ function endGame() {
     game_state = "End";
     img.style.display = "none";
     if (!isMuted) sound_die.play();
+    sound_sound.pause();
+    if (!isMuted) {
+        sound_home.currentTime = 0;
+        sound_home.play();
+    }
 
     finalScore.innerHTML = score_val.innerHTML;
     updateLeaderboard(parseInt(score_val.innerHTML));
@@ -266,6 +286,11 @@ function restartGame() {
 
     startCountdown(() => {
         game_state = "Play";
+        sound_home.pause();
+        if (!isMuted) {
+            sound_sound.currentTime = 0;
+            sound_sound.play();
+        }
         play();
     });
 }
@@ -281,6 +306,12 @@ function backToHome() {
 
     homeMenu.classList.remove("hidden");
     game_state = "Home";
+    sound_sound.currentTime = 0;
+    sound_sound.pause();
+    if (!isMuted) {
+        sound_home.currentTime = 0;
+        sound_home.play();
+    }
 }
 
 // ------------------ LEADERBOARD ------------------ //
@@ -308,8 +339,16 @@ volumeBtn.addEventListener("click", () => {
 
     if (isMuted) {
         volumeBtn.innerHTML = "<i class='bx bx-volume-mute'></i>";
+        sound_home.pause();
+        sound_sound.pause();
     } else {
         volumeBtn.innerHTML = "<i class='bx bx-volume-full'></i>";
+        if (game_state === "Home") {
+            sound_home.currentTime = 0;
+            sound_home.play();
+        } else if (game_state === "Play") {
+            sound_sound.play();
+        }
     }
 });
 
