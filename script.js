@@ -366,3 +366,18 @@ themeBtn.addEventListener("click", () => {
         themeBtn.innerHTML = "<i class='bx bx-moon'></i>";
     }
 });
+let currentBirdSkin = 'images/Bird.png'; // Default skin
+// Bird Skin Selection
+const skinThumbnails = document.querySelectorAll('.skin-thumbnail');
+skinThumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+        // Hapus kelas 'active' dari semua thumbnail
+        skinThumbnails.forEach(thumb => thumb.classList.remove('active'));
+        // Tambahkan kelas 'active' ke thumbnail yang diklik
+        thumbnail.classList.add('active');
+        // Update currentBirdSkin dengan data-skin dari thumbnail yang diklik
+        currentBirdSkin = thumbnail.dataset.skin;
+        // Set gambar burung di game sesuai skin yang dipilih
+        img.src = currentBirdSkin;
+    });
+});
