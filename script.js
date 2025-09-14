@@ -141,7 +141,7 @@ function resetGame() {
     document.querySelectorAll(".pipe_sprite").forEach((e) => e.remove());
     bird.style.top = "40vh";
     img.style.display = "block";
-    img.src = "images/Bird.png";
+    img.src = currentBirdSkin;
     score_val.innerHTML = "0";
     bird_dy = -6.5;
 }
@@ -152,17 +152,6 @@ function play() {
         if (game_state !== "Play") return;
 
         bird_dy += gravity;
-        document.addEventListener("keydown", (e) => {
-            if (e.key === " " || e.key === "ArrowUp") {
-                img.src = "images/Bird-2.png";
-                bird_dy = -6.5;
-            }
-        });
-        document.addEventListener("keyup", (e) => {
-            if (e.key === " " || e.key === "ArrowUp") {
-                img.src = "images/Bird.png";
-            }
-        });
 
         bird_props = bird.getBoundingClientRect();
 
@@ -380,4 +369,43 @@ skinThumbnails.forEach(thumbnail => {
         // Set gambar burung di game sesuai skin yang dipilih
         img.src = currentBirdSkin;
     });
+});
+function getFlySkin(skinPath) {
+    if (skinPath.endsWith('.png')) {
+        return skinPath.replace('.png', '-2.png');
+    }
+    return skinPath;
+}
+// ...existing code...
+
+// 1. Pilih skin dan simpan
+document.querySelectorAll('.skin-thumbnail').forEach(img => {
+    img.addEventListener('click', function() {
+        document.querySelectorAll('.skin-thumbnail').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        localStorage.setItem('selectedSkin', this.dataset.skin);
+    });
+});
+
+// 2. Saat game dimulai, ubah src burung
+document.getElementById('btn-start').addEventListener('click', function() {
+    const skin = localStorage.getItem('selectedSkin') || 'images/Bird.png';
+    document.getElementById('bird-1').src = skin;
+    // ...lanjutkan proses mulai game...
+});
+
+// ...existing code...
+// Hapus event keydown/keyup dari dalam play/apply_gravity!
+
+// Tambahkan di luar fungsi, cukup sekali saja:
+document.addEventListener("keydown", (e) => {
+    if ((e.key === " " || e.key === "ArrowUp") && game_state === "Play") {
+        img.src = getFlySkin(currentBirdSkin);
+        bird_dy = -6.5;
+    }
+});
+document.addEventListener("keyup", (e) => {
+    if ((e.key === " " || e.key === "ArrowUp") && game_state === "Play") {
+        img.src = currentBirdSkin;
+    }
 });
