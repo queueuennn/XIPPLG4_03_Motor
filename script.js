@@ -58,14 +58,17 @@ document.getElementById("btn-start").addEventListener("click", () => {
             sound_sound.play();
         }
         play();
-    });
+    }, "start");  // <- pakai countdown versi "start"
 });
 
-function startCountdown(callback) {
+function startCountdown(callback, type = "start") {
     const countdownEl = document.getElementById("countdown");
     countdownEl.classList.remove("hidden");
 
-    let messages = ["Ready", "Set", "Go!"];
+    let messages = (type === "resume")
+        ? ["3", "2", "1"]
+        : ["Ready", "Set", "Go!"];
+
     let i = 0;
 
     function showMessage() {
@@ -78,11 +81,11 @@ function startCountdown(callback) {
 
         i++;
         if (i < messages.length) {
-            setTimeout(showMessage, 1000); // tunggu 1 detik antar pesan
+            setTimeout(showMessage, 1000);
         } else {
             setTimeout(() => {
                 countdownEl.classList.add("hidden");
-                callback(); // mulai game
+                callback();
             }, 1000);
         }
     }
@@ -104,19 +107,23 @@ document.addEventListener("keydown", (e) => {
         cancelAnimationFrame(animationId);
         sound_sound.pause();
     } else if (e.key.toLowerCase() === "p" && game_state === "Pause") {
-        game_state = "Play";
         pauseMenu.classList.add("hidden");
-        sound_sound.play();
-        play();
+        startCountdown(() => {
+            game_state = "Play";
+            if (!isMuted) sound_sound.play();
+            play();
+        }, "resume"); // <- pakai countdown versi "resume"
     }
 });
 
 // Resume button
 document.getElementById("btn-resume").addEventListener("click", () => {
     pauseMenu.classList.add("hidden");
-    game_state = "Play";
-    sound_sound.play();
-    play();
+    startCountdown(() => {
+        game_state = "Play";
+        if (!isMuted) sound_sound.play();
+        play();
+    }, "resume"); // <- pakai countdown versi "resume"
 });
 
 // Restart buttons
